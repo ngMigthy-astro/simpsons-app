@@ -1,0 +1,38 @@
+---
+import type { Character } from '@/domain/characters/schemas/character.schema';
+
+interface Props {
+  character: Character;
+}
+
+const { character } = Astro.props;
+---
+
+<article class="group overflow-hidden rounded-xl bg-slate-900 shadow-lg transition-all hover:-translate-y-2 hover:shadow-cyan-500/20">
+  <div class="relative aspect-square overflow-hidden">
+    <img 
+      src={character.portrait_path} 
+      alt={character.name}
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+    <div class="absolute inset-0 bg-linear-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
+  </div>
+  
+  <div class="p-5">
+    <h2 class="text-2xl font-bold text-white group-hover:text-cyan-400">{character.name}</h2>
+    <p class="mt-1 text-sm font-medium text-slate-400 uppercase tracking-wider">{character.occupation}</p>
+    
+    <div class="mt-4 flex flex-wrap gap-2">
+      <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">
+        Age: {character.age ?? 'Unknown'}
+      </span>
+      <span class={`rounded-full px-3 py-1 text-xs font-bold ${character.status === 'Alive' ? 'bg-green-900/30 text-green-400' : 'bg-red-900/30 text-red-400'}`}>
+        {character.status}
+      </span>
+    </div>
+
+    <blockquote class="mt-4 border-l-2 border-cyan-500 pl-4 italic text-slate-400 text-sm line-clamp-2">
+      "{character.phrases[0] || 'No phrases available'}"
+    </blockquote>
+  </div>
+</article>

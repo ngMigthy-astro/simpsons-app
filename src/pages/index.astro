@@ -1,16 +1,26 @@
 ---
+import { getCharacters } from "@/infrastructure/api/characters.service";
 import "../styles/global.css";
+import CharacterCard from "@/ui/components/CharacterCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const familyIds = [1,2,3,4,5];
+const characters = await getCharacters(familyIds)
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<BaseLayout title="Inicio | Los Simpsons Archive">
+  <main class="mx-auto max-w-7xl p-8">
+    <header class="mb-12">
+      <h1 class="text-center text-5xl font-black uppercase tracking-tighter text-white sm:text-7xl">
+        El archivo <span class="text-yellow-400">Simpsons</span>
+      </h1>
+      <p class="mt-4 text-center text-slate-400">Datos obtenidos de la API oficial con validación Zod</p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {characters.map((character) => (
+        <CharacterCard character={character} />
+      ))}
+    </div>
+  </main>
+</BaseLayout>
